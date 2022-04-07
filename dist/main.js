@@ -337,6 +337,28 @@ eval("\n\nvar bind = __webpack_require__(/*! ./helpers/bind */ \"./node_modules/
 
 /***/ }),
 
+/***/ "./src/RednderDomFunctions.js":
+/*!************************************!*\
+  !*** ./src/RednderDomFunctions.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"renderWeatherCard\": () => (/* binding */ renderWeatherCard)\n/* harmony export */ });\n/* harmony import */ var _assets_cloud_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./assets/cloud.svg */ \"./src/assets/cloud.svg\");\n/* harmony import */ var _assets_sun_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/sun.svg */ \"./src/assets/sun.svg\");\n/* harmony import */ var _assets_cloud_rain_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/cloud-rain.svg */ \"./src/assets/cloud-rain.svg\");\n\n\n\n\nconst templateHTML = `<div class='weather-main-info'>\n<img id=\"weather-image\" style='height: 64px;' alt=\"dfsa\">\n<div class='wather-info'>\n  <p id='info-temperature'></p>\n  <p id='info-location'></p>\n</div>\n</div>\n<div class='weather-extra-info'>\n<div class='extra-info-container'>\n  <label for=\"feels-like\">Feels-like:</label>\n  <p id='feels-like'></p>\n</div>\n<div class='extra-info-container'>\n  <label for=\"humidity\">Humidity:</label>\n  <p id='humidity'></p>\n</div>\n<div class='extra-info-container'>\n  <label for=\"pressure\">Pressure:</label>\n  <p id='pressure'></p>\n</div>\n<div class='extra-info-container'>\n  <label for=\"min-temperature\">Min:</label>\n  <p id='min-temperature'></p>\n</div>\n<div class='extra-info-container'>\n  <label for=\"max-temperature\">Max:</label>\n  <p id='max-temperature'></p>\n</div>\n</div>`;\n\nlet weatherImage;\nlet temperature;\nlet location;\nlet feelsLike;\nlet minTemperature;\nlet maxTemperature;\nlet humidity;\nlet pressure;\nconst weatherCard = document.getElementById('weather-card');\n\nfunction setImage(data) {\n  const conditions = data.weather[0].main.toLowerCase();\n  if (conditions.includes('cloud')) {\n    weatherImage.src = _assets_cloud_svg__WEBPACK_IMPORTED_MODULE_0__;\n    return;\n  }\n  if (conditions.includes('clear')) {\n    weatherImage.src = _assets_sun_svg__WEBPACK_IMPORTED_MODULE_1__;\n    return;\n  }\n  if (conditions.includes('rain')) {\n    weatherImage.src = _assets_cloud_rain_svg__WEBPACK_IMPORTED_MODULE_2__;\n    return;\n  }\n  weatherImage.src = _assets_cloud_svg__WEBPACK_IMPORTED_MODULE_0__;\n}\n\nfunction getUnit(units) {\n  return units === 'metric' ? ' °C' : ' °F';\n}\n\nfunction renderWeatherCard(data, units) {\n  weatherCard.innerHTML = templateHTML;\n  temperature = document.getElementById('info-temperature');\n  location = document.getElementById('info-location');\n  feelsLike = document.getElementById('feels-like');\n  minTemperature = document.getElementById('min-temperature');\n  maxTemperature = document.getElementById('max-temperature');\n  humidity = document.getElementById('humidity');\n  pressure = document.getElementById('pressure');\n  weatherImage = document.getElementById('weather-image');\n\n  temperature.innerHTML = data.main.temp + getUnit(units);\n  location.innerHTML = data.name.toUpperCase();\n  feelsLike.innerHTML = data.main.feels_like + getUnit(units);\n  minTemperature.innerHTML = data.main.temp_min + getUnit(units);\n  maxTemperature.innerHTML = data.main.temp_max + getUnit(units);\n  humidity.innerHTML = data.main.humidity + '%';\n  pressure.innerHTML = data.main.pressure + ' hPa';\n  setImage(data);\n}\n\n\n//# sourceURL=webpack://weather-app/./src/RednderDomFunctions.js?");
+
+/***/ }),
+
+/***/ "./src/api/TemperatureApi.js":
+/*!***********************************!*\
+  !*** ./src/api/TemperatureApi.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getWeatherDataForCity\": () => (/* binding */ getWeatherDataForCity)\n/* harmony export */ });\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\nasync function getWeatherDataForCity(city, units) {\n  const data = await axios__WEBPACK_IMPORTED_MODULE_0___default().get(\n    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&appid=42ac2a7a976a6a0d509d175d7dabded8`\n  );\n  return data.data;\n}\n\n\n//# sourceURL=webpack://weather-app/./src/api/TemperatureApi.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -344,7 +366,40 @@ eval("\n\nvar bind = __webpack_require__(/*! ./helpers/bind */ \"./node_modules/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n\n\naxios__WEBPACK_IMPORTED_MODULE_0___default().get('https://jsonplaceholder.typicode.com/todos/1')\n  .then((resp) => console.log(resp.data));\n\n\n//# sourceURL=webpack://weather-app/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _api_TemperatureApi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api/TemperatureApi */ \"./src/api/TemperatureApi.js\");\n/* harmony import */ var _RednderDomFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RednderDomFunctions */ \"./src/RednderDomFunctions.js\");\n\n\n\nlet data;\nlet city = 'Cluj-Napoca';\nlet units = 'metric';\n\nlet toggle = document.getElementById('toggle');\nconst searchInput = document.getElementById('city-input');\nconst searchButton = document.getElementById('search-button');\n\nasync function fetchData(city, units) {\n  try {\n    data = await (0,_api_TemperatureApi__WEBPACK_IMPORTED_MODULE_0__.getWeatherDataForCity)(city, units);\n    (0,_RednderDomFunctions__WEBPACK_IMPORTED_MODULE_1__.renderWeatherCard)(data, units);\n  } catch (reason) {\n    if (reason.response.status === 400) {\n      alert('Please provide a city');\n    } else {\n      if (reason.response.status === 404) alert('City not found');\n    }\n  }\n}\n\ntoggle.addEventListener('change', () => {\n  units = !toggle.checked ? 'metric' : 'imperial';\n  fetchData(city, units);\n});\n\nsearchButton.addEventListener('click', () => {\n  city = searchInput.value;\n  searchInput.value = '';\n  fetchData(city, units);\n});\n\nfetchData(city, units);\n\n\n//# sourceURL=webpack://weather-app/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/assets/cloud-rain.svg":
+/*!***********************************!*\
+  !*** ./src/assets/cloud-rain.svg ***!
+  \***********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"d2464f1a0526d4c55e65.svg\";\n\n//# sourceURL=webpack://weather-app/./src/assets/cloud-rain.svg?");
+
+/***/ }),
+
+/***/ "./src/assets/cloud.svg":
+/*!******************************!*\
+  !*** ./src/assets/cloud.svg ***!
+  \******************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"6320a388771887c1a0cb.svg\";\n\n//# sourceURL=webpack://weather-app/./src/assets/cloud.svg?");
+
+/***/ }),
+
+/***/ "./src/assets/sun.svg":
+/*!****************************!*\
+  !*** ./src/assets/sun.svg ***!
+  \****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("module.exports = __webpack_require__.p + \"ed23b430cb9f4147d84c.svg\";\n\n//# sourceURL=webpack://weather-app/./src/assets/sun.svg?");
 
 /***/ })
 
@@ -399,6 +454,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axio
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -413,6 +480,26 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axio
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
