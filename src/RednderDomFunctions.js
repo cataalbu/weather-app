@@ -1,6 +1,6 @@
-import Cloud from './assets/cloud.svg';
-import Sun from './assets/sun.svg';
-import Rain from './assets/cloud-rain.svg';
+import Cloud from "./assets/cloud.svg";
+import Sun from "./assets/sun.svg";
+import Rain from "./assets/cloud-rain.svg";
 
 const templateHTML = `<div class='weather-main-info'>
 <img id="weather-image" style='height: 64px;' alt="dfsa">
@@ -40,19 +40,19 @@ let minTemperature;
 let maxTemperature;
 let humidity;
 let pressure;
-const weatherCard = document.getElementById('weather-card');
+const weatherCard = document.getElementById("weather-card");
 
 function setImage(data) {
   const conditions = data.weather[0].main.toLowerCase();
-  if (conditions.includes('cloud')) {
+  if (conditions.includes("cloud")) {
     weatherImage.src = Cloud;
     return;
   }
-  if (conditions.includes('clear')) {
+  if (conditions.includes("clear")) {
     weatherImage.src = Sun;
     return;
   }
-  if (conditions.includes('rain')) {
+  if (conditions.includes("rain")) {
     weatherImage.src = Rain;
     return;
   }
@@ -60,26 +60,26 @@ function setImage(data) {
 }
 
 function getUnit(units) {
-  return units === 'metric' ? ' °C' : ' °F';
+  return units === "metric" ? " °C" : " °F";
 }
 
-export function renderWeatherCard(data, units) {
+export default function renderWeatherCard(data, units) {
   weatherCard.innerHTML = templateHTML;
-  temperature = document.getElementById('info-temperature');
-  location = document.getElementById('info-location');
-  feelsLike = document.getElementById('feels-like');
-  minTemperature = document.getElementById('min-temperature');
-  maxTemperature = document.getElementById('max-temperature');
-  humidity = document.getElementById('humidity');
-  pressure = document.getElementById('pressure');
-  weatherImage = document.getElementById('weather-image');
+  temperature = document.getElementById("info-temperature");
+  location = document.getElementById("info-location");
+  feelsLike = document.getElementById("feels-like");
+  minTemperature = document.getElementById("min-temperature");
+  maxTemperature = document.getElementById("max-temperature");
+  humidity = document.getElementById("humidity");
+  pressure = document.getElementById("pressure");
+  weatherImage = document.getElementById("weather-image");
 
   temperature.innerHTML = data.main.temp + getUnit(units);
   location.innerHTML = data.name.toUpperCase();
   feelsLike.innerHTML = data.main.feels_like + getUnit(units);
   minTemperature.innerHTML = data.main.temp_min + getUnit(units);
   maxTemperature.innerHTML = data.main.temp_max + getUnit(units);
-  humidity.innerHTML = data.main.humidity + '%';
-  pressure.innerHTML = data.main.pressure + ' hPa';
+  humidity.innerHTML = `${data.main.humidity}%`;
+  pressure.innerHTML = `${data.main.pressure}hPa`;
   setImage(data);
 }
